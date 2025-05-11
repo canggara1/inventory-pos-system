@@ -1,92 +1,89 @@
+
 Friendly Installation Guide for Inventory and POS System (No Programming Needed)
 
 What You Need:
-- A Windows computer
-- Internet connection to download software
-- Basic computer skills (like opening programs and typing commands)
 
+A Windows computer
+Internet connection to download software
+Basic computer skills (like opening programs and typing commands)
 Step-by-Step Instructions:
 
-1. Download and Install Python:
-   - Go to https://www.python.org/downloads/
-   - Click "Download Python" for Windows
-   - Run the installer and make sure to check "Add Python to PATH" before clicking Install
+Download and Install Python:
 
-2. Download the Project Files:
-   - If you have a link to the project ZIP file, download and unzip it to a folder you can find easily (like Desktop)
-   - Or ask someone to help you get the project files into a folder
+Go to https://www.python.org/downloads/
+Click "Download Python" for Windows
+Run the installer and make sure to check "Add Python to PATH" before clicking Install
+Download the Project Files:
 
-3. Open Command Prompt:
-   - Press Windows key, type "cmd", and open Command Prompt
+If you have a link to the project ZIP file, download and unzip it to a folder you can find easily (like Desktop)
+Or ask someone to help you get the project files into a folder
+Open Command Prompt:
 
-4. Navigate to the Project Folder:
-   - In Command Prompt, type:
-     ```
-     cd path\to\project\backend
-     ```
-     Replace `path\to\project` with the actual folder path where you unzipped the files
+Press Windows key, type "cmd", and open Command Prompt
+Navigate to the Project Folder:
 
-5. Install Required Software:
-   - Type this command and press Enter:
-     ```
-     pip install -r requirements.txt
-     ```
-   - Wait for the installation to finish
+In Command Prompt, type:
+cd path\to\project\backend
+Replace path\to\project with the actual folder path where you unzipped the files
+Install Required Software:
 
-6. Start the Backend Server:
-   - In the same Command Prompt window, type:
-     ```
-     python app.py
-     ```
-   - You should see messages indicating the server is running on http://localhost:5000
+Type this command and press Enter:
+pip install -r requirements.txt
+Wait for the installation to finish
+Initialize the Database:
 
-7. Open Another Command Prompt Window:
-   - Press Windows key, type "cmd", and open a new Command Prompt
+The database tables will be created automatically when you run the backend server for the first time.
+If you encounter errors about missing tables (e.g., "no such table: user"), make sure to run the backend server once to initialize the database:
+python app.py
+This will create all necessary tables.
+Create an Admin User:
 
-8. Navigate to the Project Root Folder:
-   - Type:
-     ```
-     cd path\to\project
-     ```
-     Replace with your actual project folder path
+Run the script to create an admin user:
+python scripts/create_admin_user.py
+You will be prompted to enter the admin username, email, and password.
+The password will be securely hashed before storing in the database.
+Start the Backend Server:
 
-9. Start the Frontend Server:
-   - Type:
-     ```
-     python -m http.server 8000
-     ```
-   - This will serve the frontend files on http://localhost:8000
+In the same Command Prompt window, type:
+python app.py
+You should see messages indicating the server is running on http://localhost:5000
+Open Another Command Prompt Window:
 
-10. Open Your Web Browser:
-    - Go to http://localhost:8000/index.html
-    - You should see the login page of the Inventory & POS system
+Press Windows key, type "cmd", and open a new Command Prompt
+Navigate to the Project Root Folder:
 
-11. Login and Use the App:
-    - Use the credentials provided or ask your administrator
-    - Explore the dashboard, inventory, transfers, POS, and reports
+Type:
+cd path\to\project
+Replace with your actual project folder path
+Start the Frontend Server:
 
+Type:
+python -m http.server 8000
+This will serve the frontend files on http://localhost:8000
+Open Your Web Browser:
+
+Go to http://localhost:8000/index.html
+You should see the login page of the Inventory & POS system
+Login and Use the App:
+
+Use the credentials provided or ask your administrator
+Explore the dashboard, inventory, transfers, POS, and reports
 Additional Details for Frontend Server:
 
-- When starting the frontend server, make sure you are in the directory that contains the HTML files such as index.html.
-- For example, if your project folder is located at:
-  C:\Users\YourName\Downloads\inventory-pos-system-main
-- Open Command Prompt and navigate to this directory:
-  ```
-  cd C:\Users\YourName\Downloads\inventory-pos-system-main
-  ```
-- Then start the frontend server with:
-  ```
-  python -m http.server 8000
-  ```
-- This will serve the frontend files correctly and avoid 404 errors.
-
+When starting the frontend server, make sure you are in the directory that contains the HTML files such as index.html.
+For example, if your project folder is located at: C:\Users\YourName\Downloads\inventory-pos-system-main
+Open Command Prompt and navigate to this directory:
+cd C:\Users\YourName\Downloads\inventory-pos-system-main
+Then start the frontend server with:
+python -m http.server 8000
+This will serve the frontend files correctly and avoid 404 errors.
 Tips:
-- Keep both Command Prompt windows open while using the app
-- To stop servers, press Ctrl+C in each Command Prompt window
-- If you get errors, double-check the folder paths and that Python is installed correctly
 
+Keep both Command Prompt windows open while using the app
+To stop servers, press Ctrl+C in each Command Prompt window
+If you get errors, double-check the folder paths and that Python is installed correctly
 Need Help?
-- Ask a friend or IT support to assist with setup
-- Follow online tutorials for basic Python and command prompt usage
 
+Ask a friend or IT support to assist with setup
+Follow online tutorials for basic Python and command prompt usage
 This guide is designed to help beginners get the app running on their Windows PC without programming knowledge.

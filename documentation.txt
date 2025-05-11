@@ -1,0 +1,141 @@
+INVENTORY & POS SYSTEM DOCUMENTATION
+===================================
+
+Last Updated: May 11, 2025
+
+TABLE OF CONTENTS
+----------------
+1. System Overview
+2. Features
+3. User Roles
+4. How to Use Each Module
+5. Troubleshooting
+6. Support Contact
+
+1. SYSTEM OVERVIEW
+-----------------
+This system helps manage inventory and sales for multiple branches. It handles:
+- User management
+- Inventory tracking
+- Stock transfers between branches
+- Daily sales through POS
+- Reports generation
+
+2. FEATURES
+----------
+A. User Management
+   - Register new users
+   - Set user roles (Administrator, Branch Head, Staff, Finance)
+   - Manage branch assignments
+
+B. Inventory Management
+   - Track products with expiration dates
+   - Monitor stock levels
+   - Record product details and prices
+   - Track raw materials and supplies
+
+C. Stock Transfer
+   - Transfer products between branches
+   - Generate delivery notes
+   - Track transfer status
+   - Record damages during transfer
+
+D. Point of Sale (POS)
+   - Process sales transactions
+   - Accept multiple payment methods (Cash, QRIS)
+   - Print receipts
+   - View transaction history
+
+E. Reports
+   - Daily opening/closing stock
+   - Sales reports
+   - Inventory status reports
+   - Transfer history
+
+3. USER ROLES
+------------
+A. Administrator
+   - Full access to all features
+   - Can create/edit branches
+   - Manage all users
+   - View all reports
+
+B. Branch Head
+   - Manage branch inventory
+   - View branch reports
+   - Approve transfers
+   - Manage branch staff
+   - View current day transactions
+
+C. Staff
+   - Process sales (POS)
+   - View current inventory
+   - Initiate stock transfers
+   - Input opening/closing stock
+
+D. Finance
+   - View financial reports
+   - Monitor inventory value
+   - Access transaction history
+
+4. HOW TO USE EACH MODULE
+------------------------
+A. Logging In
+   1. Open the system in your web browser
+   2. Enter your email and password
+   3. Click "Login"
+
+B. Processing a Sale (POS)
+   1. Click "POS" in the sidebar
+   2. Select products from the grid
+   3. Adjust quantities as needed
+   4. Click "Payment Method"
+   5. Choose payment type (Cash/QRIS)
+   6. Complete payment
+   7. Print or view receipt
+
+C. Stock Transfer
+   1. Go to "Stock Transfer"
+   2. Select destination branch
+   3. Choose products and quantities
+   4. Generate delivery note
+   5. Update status when delivered
+   6. Receive confirmation from destination
+
+D. Daily Stock Count
+   1. Morning: Enter opening stock
+   2. Evening: Enter closing stock
+   3. System will compare with expected values
+   4. Submit and save the report
+
+5. TROUBLESHOOTING
+-----------------
+Common Issues and Solutions:
+
+A. Can't Log In
+   - Check if email is correct
+   - Ensure Caps Lock is off
+   - Contact administrator if password reset needed
+
+B. POS Not Working
+   - Check internet connection
+   - Refresh the page
+   - Verify product stock availability
+
+C. Transfer Issues
+   - Confirm sufficient stock exists
+   - Check if destination branch is correct
+   - Verify approval permissions
+
+6. SUPPORT CONTACT
+----------------
+For technical support:
+Email: support@inventory-pos.com
+Phone: +62 XXX-XXXX-XXXX
+Available: Monday-Friday, 9 AM - 5 PM WIB
+
+Remember:
+- Always log out when finished
+- Report any discrepancies immediately
+- Keep delivery notes for reference
+- Regularly check expiration dates

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Inventory & POS System</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <aside class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg">
+            <div class="p-4 border-b">
+                <h2 class="text-xl font-semibold text-gray-800">Reports</h2>
+            </div>
+            
+            <nav class="mt-4">
+                <a href="index.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                    <i class="fas fa-home mr-2"></i> Dashboard
+                </a>
+                <a href="inventory.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                    <i class="fas fa-box mr-2"></i> Inventory
+                </a>
+                <a href="transfer.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                    <i class="fas fa-exchange-alt mr-2"></i> Stock Transfer
+                </a>
+                <a href="pos.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                    <i class="fas fa-cash-register mr-2"></i> POS
+                </a>
+                <a href="#" class="block px-4 py-2 bg-blue-500 text-white">
+                    <i class="fas fa-chart-bar mr-2"></i> Reports
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1 p-8">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Reports & Analytics</h1>
+                <div class="flex space-x-4">
+                    <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <option>BSD Branch</option>
+                        <option>Alam Sutera Branch</option>
+                    </select>
+                    <input type="date" class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-gray-600">Daily Sales</h3>
+                        <i class="fas fa-dollar-sign text-green-500"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">Rp 2,500,000</p>
+                    <p class="text-sm text-green-500 mt-1">↑ 12% vs yesterday</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-gray-600">Items Sold</h3>
+                        <i class="fas fa-shopping-cart text-blue-500"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">43</p>
+                    <p class="text-sm text-blue-500 mt-1">↑ 5% vs yesterday</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-gray-600">Stock Value</h3>
+                        <i class="fas fa-warehouse text-purple-500"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">Rp 15,000,000</p>
+                    <p class="text-sm text-gray-500 mt-1">150 total items</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-gray-600">Low Stock</h3>
+                        <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">8</p>
+                    <p class="text-sm text-yellow-500 mt-1">Items below threshold</p>
+                </div>
+            </div>
+
+            <!-- Opening/Closing Stock Form -->
+            <div class="bg-white rounded-lg shadow-md mb-8">
+                <div class="p-6 border-b">
+                    <h2 class="text-xl font-semibold text-gray-800">Daily Stock Count</h2>
+                    <p class="text-sm text-gray-600 mt-1">Record opening and closing stock for today</p>
+                </div>
+
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Opening Stock -->
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-800 mb-4">Opening Stock</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-gray-800">Sunny Orange</p>
+                                        <p class="text-sm text-gray-600">System count: 30</p>
+                                    </div>
+                                    <input type="number" placeholder="Enter count" 
+                                           class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-gray-800">Mango Tango</p>
+                                        <p class="text-sm text-gray-600">System count: 25</p>
+                                    </div>
+                                    <input type="number" placeholder="Enter count" 
+                                           class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Closing Stock -->
+                        <div>
+                            <h3 class="text-lg font-medium text-gray-800 mb-4">Closing Stock</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-gray-800">Sunny Orange</p>
+                                        <p class="text-sm text-gray-600">System count: 22</p>
+                                    </div>
+                                    <input type="number" placeholder="Enter count" 
+                                           class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                    <div>
+                                        <p class="font-medium text-gray-800">Mango Tango</p>
+                                        <p class="text-sm text-gray-600">System count: 18</p>
+                                    </div>
+                                    <input type="number" placeholder="Enter count" 
+                                           class="w-24 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 flex justify-end">
+                        <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            Save Stock Count
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sales Summary -->
+            <div class="bg-white rounded-lg shadow-md mb-8">
+                <div class="p-6 border-b">
+                    <h2 class="text-xl font-semibold text-gray-800">Sales Summary</h2>
+                    <p class="text-sm text-gray-600 mt-1">Today's transactions by payment method</p>
+                </div>
+
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Cash Sales -->
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-medium text-gray-800">Cash Payments</h3>
+                                <span class="text-sm text-gray-600">15 transactions</span>
+                            </div>
+                            <p class="text-2xl font-bold text-gray-800">Rp 1,200,000</p>
+                        </div>
+
+                        <!-- QRIS Sales -->
+                        <div class="p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="font-medium text-gray-800">QRIS Payments</h3>
+                                <span class="text-sm text-gray-600">28 transactions</span>
+                            </div>
+                            <p class="text-2xl font-bold text-gray-800">Rp 1,300,000</p>
+                        </div>
+                    </div>
+
+                    <!-- Product Sales -->
+                    <div class="mt-6">
+                        <h3 class="font-medium text-gray-800 mb-4">Product Sales</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-800">Sunny Orange</p>
+                                    <p class="text-sm text-gray-600">25 units sold</p>
+                                </div>
+                                <p class="font-medium text-gray-800">Rp 625,000</p>
+                            </div>
+                            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                <div>
+                                    <p class="font-medium text-gray-800">Mango Tango</p>
+                                    <p class="text-sm text-gray-600">18 units sold</p>
+                                </div>
+                                <p class="font-medium text-gray-800">Rp 540,000</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Print Options -->
+            <div class="flex justify-end space-x-4">
+                <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                    <i class="fas fa-print mr-2"></i> Print Summary
+                </button>
+                <button class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                    <i class="fas fa-download mr-2"></i> Export Report
+                </button>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Add any necessary JavaScript for report functionality
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Handle button clicks (e.g., print, export)
+                console.log('Button clicked:', button.textContent.trim());
+            });
+        });
+    </script>
+</body>
+</html>

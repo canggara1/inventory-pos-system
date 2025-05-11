@@ -78,11 +78,11 @@
                 <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
                     <i class="fas fa-chart-bar mr-2"></i> Reports
                 </a>
-                <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
-                    <i class="fas fa-users mr-2"></i> User Management
-                </a>
-            </nav>
-        </aside>
+        <a href="user_management.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900" data-feature="user_management">
+          User Management
+        </a>
+      </nav>
+    </aside>
 
         <!-- Main Content -->
         <main class="ml-64 p-8">
@@ -148,9 +148,23 @@
 
     <script>
         // Check if user is already logged in
-        function checkAuthStatus() {
+        async function checkAuthStatus() {
             const token = localStorage.getItem('jwt_token');
             if (token) {
+                // Decode token payload to get permissions
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                const permissions = payload.permissions || {};
+
+                // Show/hide sidebar links based on permissions
+                document.querySelectorAll('#sidebar nav a[data-feature]').forEach(link => {
+                    const feature = link.getAttribute('data-feature');
+                    if (permissions[feature]) {
+                        link.style.display = 'block';
+                    } else {
+                        link.style.display = 'none';
+                    }
+                });
+
                 document.getElementById('loginContainer').classList.add('hidden');
                 document.getElementById('dashboardContainer').classList.remove('hidden');
                 fetchDashboardData();
@@ -207,6 +221,17 @@
                     // Update user info
                     document.querySelector('.text-gray-600').textContent = data.user.username;
                     
+                    // Show/hide sidebar links based on permissions
+                    const permissions = data.user.permissions || {};
+                    document.querySelectorAll('#sidebar nav a[data-feature]').forEach(link => {
+                        const feature = link.getAttribute('data-feature');
+                        if (permissions[feature]) {
+                            link.style.display = 'block';
+                        } else {
+                            link.style.display = 'none';
+                        }
+                    });
+
                     // Fetch dashboard data
                     fetchDashboardData();
                 } else {

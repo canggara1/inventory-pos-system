@@ -147,16 +147,86 @@
     </div>
 
     <script>
-        // Simple login handler
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        // Check if user is already logged in
+        function checkAuthStatus() {
+            const token = localStorage.getItem('jwt_token');
+            if (token) {
+                document.getElementById('loginContainer').classList.add('hidden');
+                document.getElementById('dashboardContainer').classList.remove('hidden');
+                fetchDashboardData();
+            }
+        }
+
+        // Fetch dashboard data
+        async function fetchDashboardData() {
+            try {
+                const token = localStorage.getItem('jwt_token');
+                const response = await fetch('http://localhost:5000/api/reports/daily', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    // Update dashboard stats here
+                }
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+            }
+        }
+
+        // Login handler
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             
-            // For demo purposes, show dashboard on any login attempt
-            document.getElementById('loginContainer').classList.add('hidden');
-            document.getElementById('dashboardContainer').classList.remove('hidden');
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username_or_email: email,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Store JWT token
+                    localStorage.setItem('jwt_token', data.token);
+                    
+                    // Update UI
+                    document.getElementById('loginContainer').classList.add('hidden');
+                    document.getElementById('dashboardContainer').classList.remove('hidden');
+                    
+                    // Update user info
+                    document.querySelector('.text-gray-600').textContent = data.user.username;
+                    
+                    // Fetch dashboard data
+                    fetchDashboardData();
+                } else {
+                    alert(data.message || 'Login failed. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('An error occurred during login. Please try again.');
+            }
         });
+
+        // Logout handler
+        document.querySelector('button.text-gray-600').addEventListener('click', function() {
+            localStorage.removeItem('jwt_token');
+            document.getElementById('loginContainer').classList.remove('hidden');
+            document.getElementById('dashboardContainer').classList.add('hidden');
+        });
+
+        // Check auth status on page load
+        checkAuthStatus();
     </script>
 </body>
 </html>

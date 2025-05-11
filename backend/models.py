@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import json
 
 db = SQLAlchemy()
 
@@ -9,6 +10,17 @@ class User(db.Model):
     password = db.Column(db.String(128), nullable=False)
     user_type = db.Column(db.String(20), nullable=False)  # e.g., Admin, Branch Head, Staff, Finance
     branch_id = db.Column(db.Integer, db.ForeignKey('branch.id'), nullable=True)
+    permissions_json = db.Column(db.Text, nullable=True)  # JSON string of permissions
+
+    @property
+    def permissions(self):
+        if self.permissions_json:
+            return json.loads(self.permissions_json)
+        return {}
+
+    @permissions.setter
+    def permissions(self, perms):
+        self.permissions_json = json.dumps(perms)
 
 class Branch(db.Model):
     id = db.Column(db.Integer, primary_key=True)

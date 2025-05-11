@@ -1,5 +1,6 @@
 import sys
 import os
+from werkzeug.security import generate_password_hash
 
 # Adjust sys.path to import backend modules correctly
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -18,9 +19,9 @@ def create_admin():
             username=username,
             email=email,
             user_type='Administrator',
-            branch_id=None
+            branch_id=None,
+            password=generate_password_hash(password)
         )
-        admin_user.set_password(password)
         db.session.add(admin_user)
         db.session.commit()
         print(f"Admin user '{username}' created successfully.")

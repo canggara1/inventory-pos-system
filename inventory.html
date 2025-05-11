@@ -29,19 +29,19 @@
             </div>
             
             <nav class="mt-4">
-                <a href="index.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                <a href="index.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900" data-feature="dashboard">
                     <i class="fas fa-home mr-2"></i> Dashboard
                 </a>
-                <a href="#" class="block px-4 py-2 bg-blue-500 text-white">
+                <a href="#" class="block px-4 py-2 bg-blue-500 text-white" data-feature="inventory">
                     <i class="fas fa-box mr-2"></i> Inventory
                 </a>
-                <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900" data-feature="inventory_add">
                     <i class="fas fa-plus mr-2"></i> Add Product
                 </a>
-                <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900" data-feature="transfers">
                     <i class="fas fa-exchange-alt mr-2"></i> Stock Transfer
                 </a>
-                <a href="pos.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                <a href="pos.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900" data-feature="pos">
                     <i class="fas fa-cash-register mr-2"></i> POS
                 </a>
             </nav>
@@ -295,17 +295,111 @@
     </div>
 
     <script>
-        // Show modal when Add New Product button is clicked
-        document.querySelector('button').addEventListener('click', () => {
-            document.getElementById('addProductModal').classList.remove('hidden');
+        const apiBase = 'http://localhost:5000/api';
+        const token = localStorage.getItem('jwt_token');
+        let currentUser = null;
+
+        async function fetchCurrentUser() {
+          try {
+            const res = await fetch(`${apiBase}/auth/users`, {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error('Failed to fetch users');
+            const data = await res.json();
+            // Find current user by matching token user id or decode token
+            // For simplicity, decode token here:
+            const payload = JSON.parse(atob(token.split('.')[1]));
+            return {
+              id: payload.sub,
+              username: payload.username,
+              user_type: payload.user_type,
+              branch_id: payload.branch_id
+            };
+          } catch (err) {
+            console.error('Error fetching current user:', err);
+            return null;
+          }
+        }
+
+        async function fetchBranches() {
+          try {
+            const res = await fetch(`${apiBase}/branches`, {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error('Failed to fetch branches');
+            const data = await res.json();
+            return data.branches || [];
+          } catch (err) {
+            console.error('Error fetching branches:', err);
+            return [];
+          }
+        }
+
+        function populateBranchFilter(branches) {
+          const container = document.getElementById('branchFilterContainer');
+          const select = document.getElementById('branchFilter');
+          select.innerHTML = '';
+          branches.forEach(branch => {
+            const option = document.createElement('option');
+            option.value = branch.id;
+            option.textContent = branch.name;
+            select.appendChild(option);
+          });
+          container.classList.remove('hidden');
+        }
+
+        async function fetchInventory(branchId) {
+          try {
+            let url = `${apiBase}/inventory/products`;
+            if (branchId) {
+              url += `?branch_id=${branchId}`;
+            }
+            const res = await fetch(url, {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) throw new Error('Failed to fetch inventory');
+            const data = await res.json();
+            displayInventory(data);
+          } catch (err) {
+            console.error('Error fetching inventory:', err);
+          }
+        }
+
+        function displayInventory(products) {
+          // TODO: Implement rendering inventory table rows dynamically
+          console.log('Inventory products:', products);
+        }
+
+        async function init() {
+          currentUser = await fetchCurrentUser();
+          if (!currentUser) {
+            alert('Failed to get current user info.');
+            return;
+          }
+
+          if (currentUser.user_type === 'Administrator') {
+            // Admin can see all branches, show filter
+            const branches = await fetchBranches();
+            populateBranchFilter(branches);
+            fetchInventory(null); // fetch all
+          } else if (currentUser.user_type === 'Branch Head') {
+            // Branch Head can filter branches
+            const branches = await fetchBranches();
+            populateBranchFilter(branches);
+            fetchInventory(currentUser.branch_id);
+          } else {
+            // Staff or others: hide filter, restrict to user's branch
+            document.getElementById('branchFilterContainer').classList.add('hidden');
+            fetchInventory(currentUser.branch_id);
+          }
+        }
+
+        document.getElementById('branchFilter').addEventListener('change', () => {
+          const selectedBranchId = document.getElementById('branchFilter').value;
+          fetchInventory(selectedBranchId);
         });
 
-        // Hide modal when Cancel or close button is clicked
-        document.querySelectorAll('#addProductModal button').forEach(button => {
-            button.addEventListener('click', () => {
-                document.getElementById('addProductModal').classList.add('hidden');
-            });
-        });
+        init();
     </script>
 </body>
 </html>

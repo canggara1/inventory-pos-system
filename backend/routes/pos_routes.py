@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
-from backend.models import db, Transaction, Product
-from backend.utils import token_required
+from models import db, Transaction, Product
+from utils import token_required
 from datetime import datetime
 
 bp = Blueprint('pos', __name__)

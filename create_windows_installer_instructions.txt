@@ -1,0 +1,53 @@
+Instructions to Create a Windows Installer for the Inventory & POS System
+
+Prerequisites:
+- Windows machine with Python 3.8+ installed
+- pip package manager installed
+- PyInstaller installed (`pip install pyinstaller`)
+- Node.js and npm installed (optional, if frontend build is needed)
+- Git installed (optional, for cloning repository)
+
+Steps:
+
+1. Prepare the Backend:
+   - Ensure all backend dependencies are installed:
+     ```
+     pip install -r backend/requirements.txt
+     ```
+   - Test the backend by running:
+     ```
+     cd backend
+     python app.py
+     ```
+   - Confirm the backend server runs without errors.
+
+2. Prepare the Frontend:
+   - If the frontend is static HTML/CSS/JS, no build step is needed.
+   - If using a frontend framework, build the frontend and place the output in a folder served by the backend or as static files.
+
+3. Create a PyInstaller Spec File:
+   - In the backend directory, run:
+     ```
+     pyinstaller --name=InventoryPOS --onefile app.py
+     ```
+   - This will create a single executable in the `dist` folder.
+
+4. Bundle Frontend with Backend:
+   - If the frontend files need to be included, configure PyInstaller to include the frontend directory as data files.
+   - Modify the spec file to add the frontend folder to the bundle.
+
+5. Create an Installer:
+   - Use tools like Inno Setup or NSIS to create a Windows installer that installs the executable and frontend files.
+   - Configure the installer to create shortcuts and add uninstall options.
+
+6. Testing:
+   - Run the installer on a clean Windows machine.
+   - Verify the backend server starts and frontend loads correctly.
+   - Test login, inventory, transfers, POS, and reports functionality.
+
+Notes:
+- The backend server runs as a standalone executable.
+- You may need to configure the backend to serve frontend static files or run a separate frontend server.
+- Consider packaging Python dependencies and environment variables as needed.
+
+This guide provides a high-level overview. Let me know if you want me to generate detailed scripts or configuration files for PyInstaller or the installer creation.

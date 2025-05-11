@@ -21,9 +21,23 @@ class Product(db.Model):
     name = db.Column(db.String(100), nullable=False)
     photo_url = db.Column(db.String(255))
     price = db.Column(db.Float, nullable=False)
+    quantity = db.Column(db.Integer, default=0)
     branch_id = db.Column(db.Integer, db.ForeignKey('branch.id'), nullable=False)
     production_date = db.Column(db.Date)
     expiration_date = db.Column(db.Date)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'item_id': self.item_id,
+            'name': self.name,
+            'photo_url': self.photo_url,
+            'price': self.price,
+            'quantity': self.quantity,
+            'branch_id': self.branch_id,
+            'production_date': self.production_date.strftime('%Y-%m-%d') if self.production_date else None,
+            'expiration_date': self.expiration_date.strftime('%Y-%m-%d') if self.expiration_date else None
+        }
 
 class Transfer(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management - Inventory & POS System</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex">
+        <!-- Sidebar -->
+        <aside class="fixed inset-y-0 left-0 w-64 bg-white shadow-lg">
+            <div class="p-4 border-b">
+                <h2 class="text-xl font-semibold text-gray-800">Inventory Management</h2>
+            </div>
+            
+            <nav class="mt-4">
+                <a href="index.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                    <i class="fas fa-home mr-2"></i> Dashboard
+                </a>
+                <a href="#" class="block px-4 py-2 bg-blue-500 text-white">
+                    <i class="fas fa-box mr-2"></i> Inventory
+                </a>
+                <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                    <i class="fas fa-plus mr-2"></i> Add Product
+                </a>
+                <a href="#" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                    <i class="fas fa-exchange-alt mr-2"></i> Stock Transfer
+                </a>
+                <a href="pos.html" class="block px-4 py-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                    <i class="fas fa-cash-register mr-2"></i> POS
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="ml-64 flex-1 p-8">
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-6">
+                <h1 class="text-2xl font-bold text-gray-800">Inventory Dashboard</h1>
+                <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    <i class="fas fa-plus mr-2"></i> Add New Product
+                </button>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-gray-600">Total Products</h3>
+                        <i class="fas fa-box text-blue-500"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">150</p>
+                    <p class="text-sm text-gray-500 mt-1">Across all categories</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-gray-600">Low Stock Items</h3>
+                        <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">8</p>
+                    <p class="text-sm text-gray-500 mt-1">Below minimum threshold</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-gray-600">Expiring Soon</h3>
+                        <i class="fas fa-clock text-red-500"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">12</p>
+                    <p class="text-sm text-gray-500 mt-1">Within next 7 days</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center justify-between">
+                        <h3 class="text-gray-600">Pending Transfers</h3>
+                        <i class="fas fa-exchange-alt text-green-500"></i>
+                    </div>
+                    <p class="text-2xl font-bold text-gray-800 mt-2">5</p>
+                    <p class="text-sm text-gray-500 mt-1">Awaiting confirmation</p>
+                </div>
+            </div>
+
+            <!-- Inventory Table -->
+            <div class="bg-white rounded-lg shadow-md">
+                <div class="p-6 border-b">
+                    <div class="flex justify-between items-center">
+                        <h2 class="text-xl font-semibold text-gray-800">Current Inventory</h2>
+                        <div class="flex space-x-4">
+                            <input type="text" placeholder="Search products..." 
+                                   class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>All Categories</option>
+                                <option>Products</option>
+                                <option>Raw Materials</option>
+                                <option>Supplies</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Expiry Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            <!-- Sample Product Row 1 -->
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 bg-gray-200 rounded-lg"></div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Sunny Orange</div>
+                                            <div class="text-sm text-gray-500">#PRD001</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm text-gray-900">Products</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm text-gray-900">30 bottles</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm text-gray-900">17/05/2025</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">In Stock</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">Edit</button>
+                                    <button class="text-red-600 hover:text-red-900">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Sample Product Row 2 -->
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="h-10 w-10 bg-gray-200 rounded-lg"></div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">Mango Tango</div>
+                                            <div class="text-sm text-gray-500">#PRD002</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm text-gray-900">Products</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm text-gray-900">5 bottles</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="text-sm text-gray-900">15/05/2025</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Low Stock</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <button class="text-blue-600 hover:text-blue-900 mr-3">Edit</button>
+                                    <button class="text-red-600 hover:text-red-900">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="px-6 py-4 border-t">
+                    <div class="flex items-center justify-between">
+                        <div class="text-sm text-gray-500">
+                            Showing 1 to 2 of 150 entries
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 border rounded hover:bg-gray-50">Previous</button>
+                            <button class="px-3 py-1 border rounded bg-blue-500 text-white">1</button>
+                            <button class="px-3 py-1 border rounded hover:bg-gray-50">2</button>
+                            <button class="px-3 py-1 border rounded hover:bg-gray-50">3</button>
+                            <button class="px-3 py-1 border rounded hover:bg-gray-50">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="addProductModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 max-w-2xl w-full">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-semibold text-gray-800">Add New Product</h3>
+                <button class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form class="space-y-6">
+                <!-- Product Details -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Product Name</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Product ID</label>
+                        <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- Category and Branch -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>Products</option>
+                            <option>Raw Materials</option>
+                            <option>Supplies</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Branch Location</label>
+                        <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>BSD</option>
+                            <option>Alam Sutera</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Product Photo -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Product Photo</label>
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                        <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                        <p class="text-sm text-gray-500">Drag and drop or click to upload</p>
+                    </div>
+                </div>
+
+                <!-- Dates -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Production Date</label>
+                        <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Expiration Date</label>
+                        <input type="date" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- Stock and Price -->
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Initial Stock</label>
+                        <input type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Price</label>
+                        <input type="number" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+                </div>
+
+                <!-- Form Buttons -->
+                <div class="flex justify-end space-x-4">
+                    <button type="button" class="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                        Cancel
+                    </button>
+                    <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                        Add Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Show modal when Add New Product button is clicked
+        document.querySelector('button').addEventListener('click', () => {
+            document.getElementById('addProductModal').classList.remove('hidden');
+        });
+
+        // Hide modal when Cancel or close button is clicked
+        document.querySelectorAll('#addProductModal button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.getElementById('addProductModal').classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

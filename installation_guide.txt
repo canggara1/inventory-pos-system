@@ -1,122 +1,78 @@
-INVENTORY & POS SYSTEM - INSTALLATION GUIDE FOR BEGINNERS
-======================================================
+Installation Guide for Local Setup of Inventory and POS System
 
-This guide will help you install and start using the Inventory & POS System.
+Prerequisites:
+- Python 3.8 or higher installed
+- pip package manager installed
+- Git installed (optional, for cloning repository)
+- SQLite3 (comes bundled with Python)
 
-SYSTEM REQUIREMENTS
------------------
-1. Computer or laptop with:
-   - Windows 10/11 or Mac OS X
-   - At least 4GB RAM
-   - Stable internet connection
+Steps:
 
-2. Web browser (recommended):
-   - Google Chrome (latest version)
-   - Mozilla Firefox (latest version)
+1. Clone the repository (if applicable):
+   ```
+   git clone <repository_url>
+   cd <repository_folder>
+   ```
 
-3. Printer (optional):
-   - For printing receipts
-   - For printing reports
+2. Create and activate a Python virtual environment (recommended):
+   - On Linux/macOS:
+     ```
+     python3 -m venv venv
+     source venv/bin/activate
+     ```
+   - On Windows:
+     ```
+     python -m venv venv
+     venv\Scripts\activate
+     ```
 
-INSTALLATION STEPS
------------------
-1. ACCESSING THE SYSTEM
-   a. Open your web browser
-   b. Type the system URL in the address bar:
-      http://your-company-pos.com
-   c. Bookmark this page for easy access
+3. Install required Python packages:
+   ```
+   pip install -r backend/requirements.txt
+   ```
 
-2. FIRST TIME LOGIN
-   a. You will receive an email with:
-      - Your username (usually your email)
-      - Temporary password
-   
-   b. Login steps:
-      1. Enter your email
-      2. Enter the temporary password
-      3. Click "Login"
-      4. You will be asked to change your password
-      5. Create a new password:
-         - At least 8 characters
-         - Include numbers
-         - Include special characters (!@#$%^&*)
-      6. Save your new password
+4. Initialize the database:
+   - The app uses SQLite by default.
+   - The database file `pos_system.db` will be created automatically on first run.
+   - Alternatively, you can manually create the database by running:
+     ```
+     python
+     >>> from backend.app import create_app, db
+     >>> app = create_app()
+     >>> app.app_context().push()
+     >>> db.create_all()
+     >>> exit()
+     ```
 
-3. SETTING UP YOUR PROFILE
-   a. Click your name in the top right
-   b. Select "Profile"
-   c. Fill in your details:
-      - Full name
-      - Phone number
-      - Branch location
-   d. Click "Save Changes"
+5. Run the backend Flask server:
+   ```
+   cd backend
+   python app.py
+   ```
+   - The server will start on http://localhost:5000 by default.
 
-4. PRINTER SETUP (If needed)
-   a. Go to browser settings
-   b. Find "Printing"
-   c. Add your printer
-   d. Test print a sample receipt
+6. Serve the frontend files:
+   - In the project root directory, run:
+     ```
+     python3 -m http.server 8000
+     ```
+   - Access the frontend at http://localhost:8000/index.html
 
-GETTING STARTED
---------------
-1. After Installation
-   - Explore the dashboard
-   - Check your access level
-   - Familiarize with the menu items
-   - Read the documentation
+7. Access the application:
+   - Open your browser and navigate to http://localhost:8000
+   - Use the login page to authenticate and access the dashboard.
 
-2. Daily Tasks
-   - Morning: Enter opening stock
-   - Process sales through POS
-   - Handle transfers if needed
-   - Evening: Enter closing stock
+Notes:
+- Ensure ports 5000 and 8000 are free before starting servers.
+- For development, keep the backend server running in one terminal and the frontend server in another.
+- To stop servers, use Ctrl+C in the terminal.
 
-3. Important Tips
-   - Always check product expiry dates
-   - Verify stock quantities regularly
-   - Keep track of transfer documents
-   - Save all transaction receipts
+Troubleshooting:
+- If you encounter module import errors, ensure you are running commands from the correct directory and have activated the virtual environment.
+- If the database does not initialize, check for permission issues or existing database files.
+- For any package installation issues, try upgrading pip:
+  ```
+  python -m pip install --upgrade pip
+  ```
 
-BASIC TROUBLESHOOTING
---------------------
-1. If the system won't load:
-   - Check your internet connection
-   - Clear browser cache
-   - Try refreshing the page
-
-2. If you can't log in:
-   - Check Caps Lock
-   - Verify your email address
-   - Try password reset
-
-3. If printer won't work:
-   - Check printer connection
-   - Verify printer is selected in browser
-   - Ensure paper is loaded
-
-GETTING HELP
------------
-If you need assistance:
-
-1. Contact Technical Support
-   Phone: +62 XXX-XXXX-XXXX
-   Email: support@inventory-pos.com
-
-2. Available Support Hours
-   Monday - Friday
-   9:00 AM - 5:00 PM WIB
-
-3. What to Provide When Seeking Help
-   - Your username
-   - Branch location
-   - Clear description of the issue
-   - Screenshots if possible
-
-SECURITY REMINDERS
------------------
-1. Never share your password
-2. Always log out when finished
-3. Don't leave the system unattended
-4. Report suspicious activities
-
-Remember: This is a crucial business system. If you're unsure about anything, ask your supervisor or contact support before proceeding.
+This guide should help you set up and run the Inventory and POS system locally for development and testing.

@@ -9,10 +9,16 @@ bp = Blueprint('inventory', __name__)
 @token_required
 def get_products(current_user):
     try:
-        branch_id = request.args.get('branch_id', type=int)
-        query = Product.query
-        if branch_id:
-            query = query.filter_by(branch_id=branch_id)
+        # If user is admin, can access all branches or filter by branch_id param
+        # If user is not admin, restrict to user's branch only
+        branch_id_param = request.args.get('branch_id', type=int)
+        if current_user.user_type == 'Administrator':
+            query = Product.query
+            if branch_id_param:
+                query = query.filter_by(branch_id=branch_id_param)
+        else:
+            # Restrict to user's branch only
+            query = Product.query.filter_by(branch_id=current_user.branch_id)
         products = query.all()
         return jsonify([product.to_dict() for product in products])
     except Exception as e:

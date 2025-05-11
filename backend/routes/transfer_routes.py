@@ -9,11 +9,18 @@ bp = Blueprint('transfers', __name__)
 @token_required
 def get_transfers(current_user):
     try:
-        branch_id = request.args.get('branch_id', type=int)
-        query = Transfer.query
-        if branch_id:
-            query = query.filter((Transfer.source_branch_id == branch_id) | 
-                               (Transfer.destination_branch_id == branch_id))
+        branch_id_param = request.args.get('branch_id', type=int)
+        if current_user.user_type == 'Administrator':
+            query = Transfer.query
+            if branch_id_param:
+                query = query.filter((Transfer.source_branch_id == branch_id_param) | 
+                                     (Transfer.destination_branch_id == branch_id_param))
+        else:
+            # Restrict to transfers involving user's branch only
+            query = Transfer.query.filter(
+                (Transfer.source_branch_id == current_user.branch_id) | 
+                (Transfer.destination_branch_id == current_user.branch_id)
+            )
         transfers = query.all()
         return jsonify([{
             'id': t.id,

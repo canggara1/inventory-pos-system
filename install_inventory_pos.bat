@@ -8,6 +8,10 @@ echo Initializing database by running backend server once...
 start /B python backend\app.py
 timeout /t 10
 
+echo Please manually stop the backend server (Ctrl+C) to continue...
+
+pause
+
 echo Creating admin user...
 python backend\scripts\create_admin_user.py
 

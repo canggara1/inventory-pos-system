@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 from models import db, User
 from utils import hash_password, verify_password, generate_token, token_required
+import json
 
 bp = Blueprint('auth', __name__)
 
@@ -17,6 +18,7 @@ def register():
     password = data.get('password')
     user_type = data.get('user_type', 'Staff')
     branch_id = data.get('branch_id')
+    permissions = data.get('permissions', {})
 
     if not username or not email or not password:
         return jsonify({'status': 'error', 'message': 'Missing required fields'}), 400
@@ -29,7 +31,8 @@ def register():
         email=email,
         password=hash_password(password),
         user_type=user_type,
-        branch_id=branch_id
+        branch_id=branch_id,
+        permissions_json=json.dumps(permissions)
     )
     db.session.add(new_user)
     db.session.commit()
@@ -45,7 +48,8 @@ def list_users(current_user):
         'username': u.username,
         'email': u.email,
         'user_type': u.user_type,
-        'branch_id': u.branch_id
+        'branch_id': u.branch_id,
+        'permissions': u.permissions
     } for u in users]
     return jsonify({'status': 'success', 'users': users_data})
 
@@ -66,8 +70,7 @@ def update_user(current_user, user_id):
     if 'branch_id' in data:
         user.branch_id = data['branch_id']
     if 'permissions' in data:
-        import json
-        user.permissions = data['permissions']
+        user.permissions_json = json.dumps(data['permissions'])
 
     db.session.commit()
     return jsonify({'status': 'success', 'message': 'User updated successfully'})
@@ -106,7 +109,8 @@ def login():
                 'username': user.username,
                 'email': user.email,
                 'user_type': user.user_type,
-                'branch_id': user.branch_id
+                'branch_id': user.branch_id,
+                'permissions': user.permissions
             }
         })
     except Exception as e:
